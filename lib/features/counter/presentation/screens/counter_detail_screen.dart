@@ -16,19 +16,19 @@ class CounterDetailScreen extends StatelessWidget {
         Consumer<CounterProvider>(
       builder: (context, counterprovider, child) {
         return Scaffold(
-          appBar: AppBar(title: Text(counter.title)),
+          appBar: AppBar(title: Text(counter.title ?? "")),
           //mainAxisAlignment: MainAxisAlignment.center,
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Counter Value:${counter.value}'),
+                Text('Counter Value:${counter.count}'),
                 SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      counterprovider.incrementCounter(counter.id);
+                      counterprovider.incrementCounter(counter.id ?? "");
                     },
                     child: Text('Increment')),
               ],
