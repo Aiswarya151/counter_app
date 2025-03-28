@@ -29,5 +29,15 @@ class CounterService {
       throw Exception("Failed to create counter: $e");
     }
   }
+
+   // increment Counter
+  Future<Response> incrementCounter({required String counterId}) async {
+    try {
+      final response = await _dio.put('$_baseUrl/counter/$counterId/increment');
+      return response;
+    } catch(e){
+      throw Exception("Failed to create counter: $e");
+    }
+  }
   
 }
