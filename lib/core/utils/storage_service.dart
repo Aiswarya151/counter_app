@@ -21,4 +21,9 @@ class StorageService{
     }
     return null;
   }
+
+  // Clear user data
+  Future<void> clearUserData() async {
+    await _storage.delete(key: _userKey);
+  }
   }
