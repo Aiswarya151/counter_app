@@ -82,4 +82,18 @@ class AuthProvider extends ChangeNotifier {
       log(" Error: $e");
     }
   }
+
+  // Logout User
+  Future<void> logout(BuildContext context) async {
+    try {
+      await StorageService().clearUserData(); // Clear stored user data
+      _user = null; // Reset user state
+      notifyListeners();
+      log("User Logged Out Successfully");
+      // ignore: use_build_context_synchronously
+      context.goNamed('loginScreen'); // Navigate to login screen
+    } catch (e) {
+      log("Error during logout: $e");
+    }
+  }
 }

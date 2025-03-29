@@ -1,4 +1,5 @@
 
+import 'package:counter_app/features/authentication/viewmodel/auth_provider.dart';
 import 'package:counter_app/features/counter/presentation/widgets/add_counter_bottomsheet.dart';
 import 'package:counter_app/features/counter/viewmodel/counter_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,15 @@ class _CounterScreenState extends State<CounterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Counter")),
+      appBar: AppBar(title: Text("Counter"),
+       actions: [
+        TextButton.icon(icon: Icon(Icons.logout,color: Colors.white,),label: Text('Logout',style: TextStyle(color: Colors.white),),
+        onPressed: () {
+            _showLogoutDialog(context);
+        },
+        ),
+         
+        ],),
       body: Consumer<CounterProvider>(
         builder: (context, counterProvider, child) {
           if (counterProvider.isLoading) {
@@ -38,7 +47,7 @@ class _CounterScreenState extends State<CounterScreen> {
                 (context, index) => ListTile(
                   onTap: () {
                     context.pushNamed(
-                      "counterDetailScreen",
+                      "counterdetail",
                       extra: counterProvider.counters[index],
                     );
                   },
@@ -59,4 +68,32 @@ class _CounterScreenState extends State<CounterScreen> {
       ),
     );
   }
+
+  void _showLogoutDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Logout"),
+        content: Text("Are you sure you want to log out?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+              context.read<AuthProvider>().logout(context); // Perform logout
+            },
+            child: Text("Logout", style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 }
